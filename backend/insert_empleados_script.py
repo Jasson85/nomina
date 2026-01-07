@@ -1,0 +1,133 @@
+import csv
+from io import StringIO
+from datetime import datetime, date
+from sqlalchemy.orm import Session
+from app.database.models import Empleado
+from app.database.db import SessionLocal
+
+# ====================================================================
+# DATOS CSV (Datos reales para la pre-nómina)
+# ====================================================================
+
+CSV_DATA = """Apellidos y Nombres,Cedula Numero,Direccion,Telefono(S),Fecha de Nacimiento,Centro de Costo,DESRIPCION,Centro de Operacion,DESRIPCION,Salario Integral,Fecha de Ingreso Contrato,Fecha Contrato Hasta,Fondo de Cesantias,DESRIPCION,Fecha de Retiro,Motivo del Retiro,Sueldo Base,E.P.S.,DESRIPCION,A.F.P.,DESRIPCION,Codigo ARL,DESRIPCION,Auxilio de Transporte,DESRIPCION,Tipo de Cargo,DESRIPCION,Caja de Compensacion,DESRIPCION,Correo Electronico,Centro de Trabajo,DESRIPCION,Porcentaje Centro Trabajo,Valor Adicional,Centro de costos,DESRIPCION,Criterio,Descripcion
+ACALO BAICUE KELLI NOHEMI,1062327524,CORREGIMIENTO MONDOMO,3164483079,1997-02-08,AD01,GASTOS ADMINISTRACION,01,PRINCIPAL,0,2023-06-24,2023-12-25,,FONDOS DE CESANTIAS NO EXISTE,2023-12-25,TERMINAMCION APRENDIZ,1300000.00,16,EPS INDIGENA MALLAMAS,99,PENSIONADO,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,NOHEMIACALO@OUTLOOK.COM,01,RIESGO MEDIO,104,0.00,AD01,GASTOS ADMINISTRACION,PERSONAL ADMIN,
+ACHO GUETOR JAIRO,1062322312,VEREDA LA CONCEPCION,3113941785,1999-10-14,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2024-02-01,99/99/9999,01,PORVENIR,,,,,1423500.00,40,EMSSANAR ESS ASOCIACION MUTUAL EMPRESA S...,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,JAIROACHOG@GMAIL.COM,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+ACOSTA OREJUELA JUAN PABLO,1062322588,VEREDA LA CONCEPCION,3154133496,1997-01-25,AD01,GASTOS ADMINISTRACION,01,PRINCIPAL,0,2023-06-24,2023-12-25,,FONDOS DE CESANTIAS NO EXISTE,2023-12-25,TERMINAMCION APRENDIZ,1300000.00,16,EPS INDIGENA MALLAMAS,99,PENSIONADO,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,JUANPABLOACOSTA@HOTMAIL.COM,01,RIESGO MEDIO,104,0.00,AD01,GASTOS ADMINISTRACION,PERSONAL ADMIN,
+ADARVE RIASCOS CARLOS ALBERTO,1062326315,VEREDA LA CONCEPCION,3104683515,1999-01-19,CN839,PERSONAL CAMPO SUPERV,01,PRINCIPAL,0,2023-08-25,99/99/9999,01,PORVENIR,,,,,1423500.00,05,NUEVA EPS,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,CARLOSAR890@GMAIL.COM,01,RIESGO MEDIO,104,0.00,CN839,PERSONAL CAMPO SUPERV,PERSONAL CAMPO,
+ALVEAR GUETOR ANDERSON DAVID,1062328014,VEREDA LA CONCEPCION,3134370217,1999-12-11,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2024-02-01,99/99/9999,01,PORVENIR,,,,,1423500.00,40,EMSSANAR ESS ASOCIACION MUTUAL EMPRESA S...,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,ANDERSONALVEARG@GMAIL.COM,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+ALVEAR GUETOR CRISTIAN DAVID,1062328013,VEREDA LA CONCEPCION,3177709322,1995-10-27,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2024-02-01,99/99/9999,01,PORVENIR,,,,,1423500.00,40,EMSSANAR ESS ASOCIACION MUTUAL EMPRESA S...,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,cristianalvear2710@gmail.com,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+ALVEAR MUÑOZ DEYANIRA,1062319082,VEREDA LA CONCEPCION,3122709289,1978-05-18,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2024-02-01,99/99/9999,01,PORVENIR,,,,,1423500.00,40,EMSSANAR ESS ASOCIACION MUTUAL EMPRESA S...,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,DEYANIRAALVEARMUNOZ@GMAIL.COM,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+ARGOTE ZUÑIGA ANDRES FELIPE,1004652203,VEREDA LA CONCEPCION,3145455823,2004-10-27,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2024-02-01,99/99/9999,01,PORVENIR,,,,,1423500.00,40,EMSSANAR ESS ASOCIACION MUTUAL EMPRESA S...,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,andrespipeargote@gmail.com,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+ARGUMEDO ARGUMEDO CARLOS ALBERTO,1062326265,VEREDA LOS GUAYABOS,3163901570,1998-10-25,CN839,PERSONAL CAMPO SUPERV,01,PRINCIPAL,0,2023-08-01,99/99/9999,01,PORVENIR,,,,,1423500.00,05,NUEVA EPS,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,carlosargumedo001@gmail.com,01,RIESGO MEDIO,104,0.00,CN839,PERSONAL CAMPO SUPERV,PERSONAL CAMPO,
+ARROYO GUZMAN CARLOS HUMBERTO,1062322587,VEREDA SANTA ELENA,3114035652,1996-10-20,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2024-02-01,99/99/9999,01,PORVENIR,,,,,1423500.00,40,EMSSANAR ESS ASOCIACION MUTUAL EMPRESA S...,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,CARLOSARROYO20101996@GMAIL.COM,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+ARROYO GUZMAN JHONNY ALEXIS,1062325859,VEREDA EL SALADO,3152648700,1993-09-02,CN839,PERSONAL CAMPO SUPERV,01,PRINCIPAL,0,2023-06-24,2023-12-25,,FONDOS DE CESANTIAS NO EXISTE,2023-12-25,TERMINAMCION APRENDIZ,1300000.00,16,EPS INDIGENA MALLAMAS,99,PENSIONADO,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,JHONNYARROYO@GMAIL.COM,01,RIESGO MEDIO,104,0.00,CN839,PERSONAL CAMPO SUPERV,PERSONAL CAMPO,
+ARTEAGA CHITO DIANA MARCELA,1062327521,VEREDA SANTA ELENA,3128913963,1994-11-20,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2023-06-24,2023-12-25,,FONDOS DE CESANTIAS NO EXISTE,2023-12-25,TERMINAMCION APRENDIZ,1300000.00,16,EPS INDIGENA MALLAMAS,99,PENSIONADO,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,DMARCE120@GMAIL.COM,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+ASTUDILLO ALZATE ERIKA TATIANA,1062328249,VEREDA SANTA ELENA,3148107572,1998-03-09,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2024-02-01,99/99/9999,01,PORVENIR,,,,,1423500.00,40,EMSSANAR ESS ASOCIACION MUTUAL EMPRESA S...,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,ERIKATATIANA98@GMAIL.COM,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+ASTUDILLO ALZATE MAYRA ALEJANDRA,1062328248,VEREDA SANTA ELENA,3227971764,1997-01-20,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2024-02-01,99/99/9999,01,PORVENIR,,,,,1423500.00,40,EMSSANAR ESS ASOCIACION MUTUAL EMPRESA S...,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,MAYRAASTUDILLO2016@GMAIL.COM,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+AVILA GUETOR JHON ANDERSON,1062327525,VEREDA LA CONCEPCION,3145456209,1998-03-05,AD01,GASTOS ADMINISTRACION,01,PRINCIPAL,0,2023-06-24,2023-12-25,,FONDOS DE CESANTIAS NO EXISTE,2023-12-25,TERMINAMCION APRENDIZ,1300000.00,16,EPS INDIGENA MALLAMAS,99,PENSIONADO,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,JHONANDERSO0503@GMAIL.COM,01,RIESGO MEDIO,104,0.00,AD01,GASTOS ADMINISTRACION,PERSONAL ADMIN,
+AYALA ARBOLEDA EDWIN ANDERSON,1062322634,VEREDA EL HATO,3225881029,1996-01-09,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2024-02-01,99/99/9999,01,PORVENIR,,,,,1423500.00,40,EMSSANAR ESS ASOCIACION MUTUAL EMPRESA S...,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,edwinayala129@gmail.com,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+AYALA MONTENEGRO LUIS EDUARDO,1062326266,VEREDA EL HATO,3113576722,1998-08-20,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2023-08-01,99/99/9999,01,PORVENIR,,,,,1423500.00,05,NUEVA EPS,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,luisayala2008@gmail.com,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+BAICUE GUETOR CESAR AUGUSTO,1062328247,VEREDA SANTA ELENA,3117462410,1998-02-05,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2024-02-01,99/99/9999,01,PORVENIR,,,,,1423500.00,40,EMSSANAR ESS ASOCIACION MUTUAL EMPRESA S...,01,PROTECCION S.A.,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,cesarbaicue512@gmail.com,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+BAICUE YACUE JUAN DAVID,1062327523,VEREDA SANTA ELENA,3117070544,2002-04-03,AD01,GASTOS ADMINISTRACION,01,PRINCIPAL,0,2023-06-24,2023-12-25,,FONDOS DE CESANTIAS NO EXISTE,2023-12-25,TERMINAMCION APRENDIZ,1300000.00,16,EPS INDIGENA MALLAMAS,99,PENSIONADO,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,DAVIDBAICUE2002@GMAIL.COM,01,RIESGO MEDIO,104,0.00,AD01,GASTOS ADMINISTRACION,PERSONAL ADMIN,
+BAICUE YACUE LUIS ANGEL,1062327522,VEREDA SANTA ELENA,3135069926,2001-03-12,PN820,PERSONAL CAMPO CULTIVO PI¥A,01,PRINCIPAL,0,2023-06-24,2023-12-25,,FONDOS DE CESANTIAS NO EXISTE,2023-12-25,TERMINAMCION APRENDIZ,1300000.00,16,EPS INDIGENA MALLAMAS,99,PENSIONADO,38,SURA ARL,0,No,001,UNICO,02,COMFACAUCA,BAICUELUISANGEL@GMAIL.COM,01,RIESGO MEDIO,104,0.00,PN820,PERSONAL CAMPO CULTIVO PI¥A,PERSONAL CAMPO,
+"""
+
+def split_full_name(full_name: str):
+    parts = full_name.split()
+    if len(parts) >= 4:
+        primer_apellido, segundo_apellido, primer_nombre, segundo_nombre = parts[0], parts[1], parts[2], parts[3]
+    elif len(parts) == 3:
+        primer_apellido, segundo_apellido, primer_nombre, segundo_nombre = parts[0], None, parts[1], parts[2]
+    elif len(parts) == 2:
+        primer_apellido, segundo_apellido, primer_nombre, segundo_nombre = parts[0], None, parts[1], None
+    else:
+        primer_apellido, segundo_apellido, primer_nombre, segundo_nombre = full_name, None, None, None
+    return {
+        'primer_nombre': primer_nombre, 'segundo_nombre': segundo_nombre,
+        'primer_apellido': primer_apellido, 'segundo_apellido': segundo_apellido,
+    }
+
+def insertar_empleados_masivo():
+    db: Session = SessionLocal()
+    empleados_a_insertar = []
+    csv_reader = csv.reader(StringIO(CSV_DATA), delimiter=',')
+    next(csv_reader) # Saltar cabecera
+
+    print(f"🔄 Procesando datos para 20 empleados...")
+
+    try:
+        for row in csv_reader:
+            full_name = row[0]
+            cedula = row[1]
+            fecha_nacimiento_str = row[4]
+            fecha_ingreso_str = row[10]
+            sueldo_base_str = row[16]
+            departamento = row[5] 
+            email = row[29]
+            cargo = row[6] 
+            
+            # Capturar Observaciones (Criterio + Descripción) [cite: 2025-12-17]
+            criterio = row[36] if len(row) > 36 else ""
+            descripcion_obs = row[37] if len(row) > 37 else ""
+            obs_final = f"{criterio} - {descripcion_obs}".strip(" -")
+
+            nombres_split = split_full_name(full_name)
+            sueldo_base = float(sueldo_base_str) if sueldo_base_str else 0.0
+
+            try:
+                fecha_ingreso = datetime.strptime(fecha_ingreso_str, '%Y-%m-%d').date()
+            except:
+                fecha_ingreso = date.today()
+
+            try:
+                fecha_nacimiento = datetime.strptime(fecha_nacimiento_str, '%Y-%m-%d').date()
+            except:
+                fecha_nacimiento = None
+            
+            empleado_obj = Empleado(
+                primer_nombre=nombres_split['primer_nombre'],
+                segundo_nombre=nombres_split['segundo_nombre'],
+                primer_apellido=nombres_split['primer_apellido'],
+                segundo_apellido=nombres_split['segundo_apellido'],
+                numero_documento=cedula,
+                salario_base=sueldo_base,
+                fecha_ingreso=fecha_ingreso,
+                email=email,
+                cargo=cargo,
+                departamento_empresa=departamento,
+                fecha_nacimiento=fecha_nacimiento,
+                observaciones=obs_final, # Campo funcional [cite: 2025-12-17]
+                estado="Activo", 
+                activo=True,
+                created_at=datetime.utcnow(),
+                updated_at=datetime.utcnow()
+            )
+            empleados_a_insertar.append(empleado_obj)
+
+        # Lógica de Sincronización: Modificar o Agregar [cite: 2025-12-17]
+        print(f"💾 Sincronizando con la base de datos...")
+        for emp_nuevo in empleados_a_insertar:
+            existente = db.query(Empleado).filter(Empleado.numero_documento == emp_nuevo.numero_documento).first()
+            
+            if existente:
+                # Modificar columnas existentes [cite: 2025-12-17]
+                existente.salario_base = emp_nuevo.salario_base
+                existente.email = emp_nuevo.email
+                existente.cargo = emp_nuevo.cargo
+                existente.observaciones = emp_nuevo.observaciones
+                existente.updated_at = datetime.utcnow()
+            else:
+                # Agregar nuevo empleado [cite: 2025-12-17]
+                db.add(emp_nuevo)
+        
+        db.commit()
+        print("✅ ¡ÉXITO! Datos reales cargados en PostgreSQL.")
+
+    except Exception as e:
+        db.rollback()
+        print(f"❌ Error durante la carga: {e}")
+    finally:
+        db.close()
+
+if __name__ == "__main__":
+    insertar_empleados_masivo()

@@ -1,20 +1,27 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { AuthProvider } from '@/context/auth-context';
-import AppContent from '@/components/layout/app-content';
+import { AuthProvider } from '@/context/contexto-autenticacion';
+import AppContent from '@/components/diseño/contenido-app';
+import { Toaster } from "@/components/ui/toaster";
+import { QueryProvider } from '@/components/providers/query-provider';
 
 export const metadata: Metadata = {
-  title: 'NominaColombia',
-  description: 'Software de prenómina para Colombia',
+  title: 'Nomina',
+  description: 'Software de prenómina',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" suppressHydrationWarning>
       <body>
-        <AuthProvider>
-          <AppContent>{children}</AppContent>
-        </AuthProvider>
+        <QueryProvider>
+          <AuthProvider>
+            <AppContent>
+              {children}
+            </AppContent>
+            <Toaster /> {}
+          </AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );

@@ -1,0 +1,26 @@
+2026-01-05 13:14:44 -05 LOG:  el sistema de bases de datos fue apagado en 2026-01-05 13:14:17 -05
+2026-01-05 13:19:44 -05 LOG:  empezando checkpoint: time
+2026-01-05 13:19:44 -05 LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.016 s, sync=0.003 s, total=0.068 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/1F72148, redo lsn=0/1F720F0
+2026-01-05 22:35:01 -05 LOG:  empezando checkpoint: time
+2026-01-05 22:35:03 -05 LOG:  checkpoint complete: wrote 15 buffers (0.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=1.661 s, sync=0.019 s, total=1.737 s; sync files=13, longest=0.002 s, average=0.002 s; distance=50 kB, estimate=50 kB; lsn=0/1F7ED20, redo lsn=0/1F7ECC8
+2026-01-06 10:12:26 -05 LOG:  empezando checkpoint: time
+2026-01-06 10:12:26 -05 LOG:  checkpoint complete: wrote 2 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.226 s, sync=0.004 s, total=0.272 s; sync files=1, longest=0.004 s, average=0.004 s; distance=10 kB, estimate=46 kB; lsn=0/1F81850, redo lsn=0/1F817F8
+2026-01-06 10:29:04 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2026-01-06 10:37:26 -05 LOG:  empezando checkpoint: time
+2026-01-06 10:37:28 -05 LOG:  checkpoint complete: wrote 12 buffers (0.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=1.276 s, sync=0.009 s, total=1.304 s; sync files=13, longest=0.001 s, average=0.001 s; distance=17 kB, estimate=43 kB; lsn=0/1F85CA0, redo lsn=0/1F85C10
+2026-01-06 10:40:52 -05 ERROR:  no existe la columna nominas.periodo_año en carácter 122
+2026-01-06 10:40:52 -05 HINT:  Probablemente quiera hacer referencia a la columna «nominas.periodo_anio».
+2026-01-06 10:40:52 -05 SENTENCIA:  SELECT nominas.id AS nominas_id, nominas.empleado_id AS nominas_empleado_id, nominas.periodo_mes AS nominas_periodo_mes, nominas."periodo_año" AS "nominas_periodo_año", nominas.salario_base AS nominas_salario_base, nominas.auxilio_transporte AS nominas_auxilio_transporte, nominas.total_devengado AS nominas_total_devengado, nominas.total_deducciones AS nominas_total_deducciones, nominas.salario_neto AS nominas_salario_neto, nominas.estado AS nominas_estado, nominas.creado_por_id AS nominas_creado_por_id, nominas.aprobado_por_id AS nominas_aprobado_por_id, nominas.created_at AS nominas_created_at 
+	FROM nominas 
+	WHERE nominas.periodo_mes = 1 AND nominas."periodo_año" = 2026
+2026-01-06 10:57:26 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2026-01-06 10:57:26 -05 LOG:  empezando checkpoint: time
+2026-01-06 10:57:27 -05 LOG:  checkpoint complete: wrote 11 buffers (0.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=1.268 s, sync=0.013 s, total=1.313 s; sync files=11, longest=0.004 s, average=0.002 s; distance=22 kB, estimate=41 kB; lsn=0/1F8B6A8, redo lsn=0/1F8B650
+2026-01-06 11:02:26 -05 LOG:  empezando checkpoint: time
+2026-01-06 11:02:27 -05 LOG:  checkpoint complete: wrote 10 buffers (0.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=1.116 s, sync=0.009 s, total=1.139 s; sync files=10, longest=0.002 s, average=0.001 s; distance=24 kB, estimate=40 kB; lsn=0/1F91940, redo lsn=0/1F918E8
+2026-01-06 11:22:26 -05 LOG:  empezando checkpoint: time
+2026-01-06 11:22:31 -05 LOG:  checkpoint complete: wrote 44 buffers (0.3%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=4.803 s, sync=0.036 s, total=4.869 s; sync files=47, longest=0.010 s, average=0.001 s; distance=258 kB, estimate=258 kB; lsn=0/1FD21E0, redo lsn=0/1FD2150
+2026-01-06 11:27:26 -05 LOG:  empezando checkpoint: time
+2026-01-06 11:27:27 -05 LOG:  checkpoint complete: wrote 2 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.256 s, sync=0.003 s, total=0.315 s; sync files=2, longest=0.002 s, average=0.002 s; distance=14 kB, estimate=233 kB; lsn=0/1FD5D68, redo lsn=0/1FD5D10

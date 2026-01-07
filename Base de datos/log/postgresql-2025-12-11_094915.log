@@ -1,0 +1,7 @@
+2025-12-11 09:49:15 -05 LOG:  el sistema de bases de datos fue apagado en 2025-12-10 21:25:05 -05
+2025-12-11 09:54:15 -05 LOG:  empezando checkpoint: time
+2025-12-11 09:54:15 -05 LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.018 s, sync=0.005 s, total=0.081 s; sync files=2, longest=0.003 s, average=0.003 s; distance=0 kB, estimate=0 kB; lsn=0/1D901E0, redo lsn=0/1D90188
+2025-12-11 14:06:52 -05 LOG:  apagando
+2025-12-11 14:06:52 -05 LOG:  empezando checkpoint: shutdown immediate
+2025-12-11 14:06:52 -05 ERROR:  cancelando la sentencia debido a una petición del usuario
+2025-12-11 14:06:52 -05 LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.001 s, total=0.025 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/1D90290, redo lsn=0/1D90290

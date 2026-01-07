@@ -1,56 +1,44 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Header
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from datetime import timedelta
 from app.database.db import get_db
-from app.database.models import Usuario
-from app.schemas.auth_schema import UsuarioCreate, UsuarioLogin, TokenResponse
+from app.database.models import Usuario, RolUsuario
+from app.schemas.auth_schema import UsuarioCreate, TokenResponse, Usuario as UsuarioSchema 
 from app.services.auth_service import AuthService
+from typing import Dict, Any
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter(tags=["Auth"])
 
-@router.post("/register", response_model=dict)
+# REGISTRO
+@router.post("/register", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
 def registrar(usuario: UsuarioCreate, db: Session = Depends(get_db)):
-    db_usuario = db.query(Usuario).filter(Usuario.email == usuario.email).first()
-    if db_usuario:
-        raise HTTPException(status_code=400, detail="Email ya registrado")
+    """Registra un nuevo usuario (Por defecto con rol EMPLEADO)."""
     
-    nuevo_usuario = AuthService.crear_usuario(db, usuario)
-    return {"mensaje": "Usuario registrado", "email": nuevo_usuario.email}
+    nuevo_usuario = AuthService.crear_usuario(db, usuario, rol=RolUsuario.EMPLEADO)
+    return {"mensaje": "Usuario registrado exitosamente", "email": nuevo_usuario.email}
 
+# LOGIN (Obtener Token)
 @router.post("/login", response_model=TokenResponse)
-def login(usuario: UsuarioLogin, db: Session = Depends(get_db)):
-    db_usuario = db.query(Usuario).filter(Usuario.email == usuario.email).first()
-    if not db_usuario or not AuthService.verificar_contraseña(usuario.password, db_usuario.hashed_password):
-        raise HTTPException(status_code=401, detail="Credenciales inválidas")
+def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    """
+    Verifica las credenciales y devuelve un token JWT.
+    Utiliza el formato estándar OAuth2 (username = email, password).
+    """
+    db_usuario = db.query(Usuario).filter(Usuario.email == form_data.username).first()
+
+    if not db_usuario or not AuthService.verificar_contraseña(form_data.password, db_usuario.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, 
+            detail="Credenciales inválidas", 
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     
-    access_token = AuthService.crear_token(db_usuario.id, db_usuario.email)
+    # Crear token usando el ID, email y ROL
+    access_token = AuthService.crear_token(db_usuario.id, db_usuario.email, db_usuario.rol) 
     return {"access_token": access_token, "token_type": "bearer"}
 
-@router.get("/me")
-def obtener_usuario_actual(authorization: str = Header(None), db: Session = Depends(get_db)):
-    if not authorization:
-        raise HTTPException(status_code=401, detail="Token no proporcionado")
-    
-    try:
-        # Extraer token del header "Bearer <token>"
-        parts = authorization.split()
-        if len(parts) != 2 or parts[0].lower() != "bearer":
-            raise HTTPException(status_code=401, detail="Formato de token inválido")
-        
-        token = parts[1]
-        user_id = AuthService.obtener_user_id_del_token(token)
-        usuario = db.query(Usuario).filter(Usuario.id == user_id).first()
-        
-        if not usuario:
-            raise HTTPException(status_code=401, detail="Usuario no encontrado")
-        
-        return {
-            "id": usuario.id,
-            "email": usuario.email,
-            "nombre": usuario.nombre,
-            "es_admin": getattr(usuario, 'es_admin', False)
-        }
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=401, detail=str(e))
+# OBTENER USUARIO ACTUAL
+@router.get("/me", response_model=UsuarioSchema)
+def obtener_usuario_actual(current_user: Usuario = Depends(AuthService.get_current_user)):
+    """Retorna la información del usuario actualmente autenticado (Rol y detalles)."""
+    return current_user

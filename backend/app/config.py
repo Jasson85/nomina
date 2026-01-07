@@ -1,16 +1,26 @@
-from pydantic_settings import BaseSettings
-from dotenv import load_dotenv
-import os
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from typing import Optional
 
-load_dotenv()
+class Settings(BaseSettings):    
 
-class Settings(BaseSettings):
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/nomina_colombia")
-    SECRET_KEY: str = os.getenv("SECRET_KEY", "tu_clave_secreta")
+    # URL de la base de datos para SQLAlchemy
+    DATABASE_URL: str
+    
+    # Clave secreta para firmar los JWTs
+    SECRET_KEY: str
+    
+    # Algoritmo de JWT 
     ALGORITHM: str = "HS256"
+    
+    # Tiempo de expiración del token 
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
-    class Config:
-        env_file = ".env"
+    # Esto le dice a Pydantic dónde buscar el archivo .env
+    model_config = SettingsConfigDict(
+        env_file=".env", 
+        env_file_encoding='utf-8', 
+        extra='ignore' 
+    )
 
+# Instanciamos la configuración una sola vez
 settings = Settings()

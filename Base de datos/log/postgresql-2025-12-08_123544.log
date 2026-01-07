@@ -1,0 +1,221 @@
+2025-12-08 12:35:44 -05 LOG:  el sistema de bases de datos fue apagado en 2025-12-08 12:35:17 -05
+2025-12-08 12:40:44 -05 LOG:  empezando checkpoint: time
+2025-12-08 12:40:44 -05 LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.014 s, sync=0.003 s, total=0.058 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/183EC30, redo lsn=0/183EBD8
+2025-12-08 12:50:44 -05 LOG:  empezando checkpoint: time
+2025-12-08 12:52:32 -05 LOG:  checkpoint complete: wrote 995 buffers (6.1%), wrote 1 SLRU buffers; 1 WAL file(s) added, 0 removed, 0 recycled; write=108.373 s, sync=0.161 s, total=108.694 s; sync files=303, longest=0.014 s, average=0.001 s; distance=4673 kB, estimate=4673 kB; lsn=0/1CCF128, redo lsn=0/1CCF098
+2025-12-08 13:20:44 -05 LOG:  empezando checkpoint: time
+2025-12-08 13:20:53 -05 LOG:  checkpoint complete: wrote 86 buffers (0.5%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=9.771 s, sync=0.088 s, total=9.907 s; sync files=84, longest=0.012 s, average=0.002 s; distance=458 kB, estimate=4251 kB; lsn=0/1D41AA8, redo lsn=0/1D41A18
+2025-12-08 13:25:44 -05 LOG:  empezando checkpoint: time
+2025-12-08 13:25:45 -05 LOG:  checkpoint complete: wrote 2 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.227 s, sync=0.003 s, total=0.249 s; sync files=2, longest=0.002 s, average=0.001 s; distance=10 kB, estimate=3827 kB; lsn=0/1D44458, redo lsn=0/1D44400
+2025-12-08 13:30:44 -05 LOG:  empezando checkpoint: time
+2025-12-08 13:30:45 -05 LOG:  checkpoint complete: wrote 12 buffers (0.1%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=1.331 s, sync=0.005 s, total=1.361 s; sync files=6, longest=0.002 s, average=0.001 s; distance=83 kB, estimate=3453 kB; lsn=0/1D592E0, redo lsn=0/1D59288
+2025-12-08 14:30:44 -05 LOG:  empezando checkpoint: time
+2025-12-08 14:30:45 -05 LOG:  checkpoint complete: wrote 6 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.683 s, sync=0.007 s, total=0.733 s; sync files=6, longest=0.003 s, average=0.002 s; distance=42 kB, estimate=3112 kB; lsn=0/1D63C28, redo lsn=0/1D63BD0
+2025-12-08 15:26:06 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 16:45:09 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 16:46:57 -05 ERROR:  llave duplicada viola restricción de unicidad «ix_empleados_email»
+2025-12-08 16:46:57 -05 DETALLE:  Ya existe la llave (email)=(nan).
+2025-12-08 16:46:57 -05 SENTENCIA:  INSERT INTO empleados (codigo_empleado, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, tipo_documento, numero_documento, lugar_expedicion, fecha_expedicion, fecha_nacimiento, lugar_nacimiento, sexo, estado_civil, rh, direccion_residencia, ciudad, departamento, codigo_postal, telefono_fijo, telefono_celular, email, email_corporativo, contacto_emergencia_nombre, contacto_emergencia_parentesco, contacto_emergencia_telefono, fecha_ingreso, fecha_terminacion, cargo, departamento_empresa, centro_costo, jefe_inmediato, tipo_contrato, duracion_contrato, fecha_fin_contrato, tipo_salario, salario_base, tipo_jornada, horas_semanales, horario_entrada, horario_salida, eps_nombre, eps_codigo, afp_nombre, afp_codigo, arl_nombre, arl_codigo, nivel_riesgo_arl, caja_compensacion, codigo_caja_compensacion, fondo_cesantias, codigo_fondo_cesantias, banco, tipo_cuenta, numero_cuenta, tiene_personas_a_cargo, numero_hijos, nivel_educacion, profesion, titulo_obtenido, tiene_libreta_militar, numero_libreta_militar, discapacidad, tipo_discapacidad, activo, estado, motivo_retiro, tiene_contrato_firmado, tiene_hoja_vida, tiene_examen_medico, tiene_afiliaciones, created_at, updated_at) VALUES (NULL, 'MARIA', 'VICTORIA', 'ARIAS', 'BONILLA', 'CC', '1062321705', NULL, NULL, NULL, NULL, '', NULL, NULL, 'CHIRIVICO', '', '', NULL, NULL, '31185472549.0', 'nan', NULL, NULL, NULL, NULL, NULL, NULL, 'UNICO', 'PN820', NULL, NULL, 'Indefinido', NULL, NULL, 'Mensual', 908526.0, 'Ordinaria', 48, NULL, NULL, '40', NULL, '31', NULL, 'SURA ARL', NULL, 'I', '2', NULL, '1.0', NULL, '', '', '', false, 0, NULL, NULL, NULL, NULL, NULL, false, NULL, false, 'Activo', 'VOLUNTARIO', false, false, false, false, '2025-12-08T21:46:57.147371'::timestamp, '2025-12-08T21:46:57.147371'::timestamp) RETURNING empleados.id
+2025-12-08 16:46:57 -05 ERROR:  llave duplicada viola restricción de unicidad «ix_empleados_email»
+2025-12-08 16:46:57 -05 DETALLE:  Ya existe la llave (email)=(nan).
+2025-12-08 16:46:57 -05 SENTENCIA:  INSERT INTO empleados (codigo_empleado, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, tipo_documento, numero_documento, lugar_expedicion, fecha_expedicion, fecha_nacimiento, lugar_nacimiento, sexo, estado_civil, rh, direccion_residencia, ciudad, departamento, codigo_postal, telefono_fijo, telefono_celular, email, email_corporativo, contacto_emergencia_nombre, contacto_emergencia_parentesco, contacto_emergencia_telefono, fecha_ingreso, fecha_terminacion, cargo, departamento_empresa, centro_costo, jefe_inmediato, tipo_contrato, duracion_contrato, fecha_fin_contrato, tipo_salario, salario_base, tipo_jornada, horas_semanales, horario_entrada, horario_salida, eps_nombre, eps_codigo, afp_nombre, afp_codigo, arl_nombre, arl_codigo, nivel_riesgo_arl, caja_compensacion, codigo_caja_compensacion, fondo_cesantias, codigo_fondo_cesantias, banco, tipo_cuenta, numero_cuenta, tiene_personas_a_cargo, numero_hijos, nivel_educacion, profesion, titulo_obtenido, tiene_libreta_militar, numero_libreta_militar, discapacidad, tipo_discapacidad, activo, estado, motivo_retiro, tiene_contrato_firmado, tiene_hoja_vida, tiene_examen_medico, tiene_afiliaciones, created_at, updated_at) VALUES (NULL, 'HERNANDO', '', 'BALANTA', '', 'CC', '10480474', NULL, NULL, NULL, NULL, '', NULL, NULL, 'VRDA LOMITAS', '', '', NULL, NULL, '3205874912.0', 'nan', NULL, NULL, NULL, NULL, NULL, NULL, 'UNICO', 'AG03', NULL, NULL, 'Indefinido', NULL, NULL, 'Mensual', 1423500.0, 'Ordinaria', 48, NULL, NULL, '41', NULL, '1', NULL, 'SURA ARL', NULL, 'I', '2', NULL, '1.0', NULL, '', '', '', false, 0, NULL, NULL, NULL, NULL, NULL, false, NULL, true, 'Activo', '', false, false, false, false, '2025-12-08T21:46:57.243713'::timestamp, '2025-12-08T21:46:57.243713'::timestamp) RETURNING empleados.id
+2025-12-08 16:50:29 -05 LOG:  empezando checkpoint: time
+2025-12-08 16:50:32 -05 LOG:  checkpoint complete: wrote 28 buffers (0.2%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=3.059 s, sync=0.025 s, total=3.106 s; sync files=18, longest=0.014 s, average=0.002 s; distance=51 kB, estimate=2806 kB; lsn=0/1D70940, redo lsn=0/1D708B0
+2025-12-08 16:53:54 -05 ERROR:  error de sintaxis en o cerca de «=» en carácter 27
+2025-12-08 16:53:54 -05 SENTENCIA:  UPDATE empleadosSET email = NULLWHERE email = 'nan';
+2025-12-08 16:54:48 -05 ERROR:  error de sintaxis en o cerca de «nomina» en carácter 1
+2025-12-08 16:54:48 -05 SENTENCIA:  nomina=# UPDATE empleados SET email = NULL WHERE email = 'nan';
+2025-12-08 16:55:37 -05 ERROR:  error de sintaxis en o cerca de «nomina» en carácter 1
+2025-12-08 16:55:37 -05 SENTENCIA:  nomina=# UPDATE empleados SET email = NULL WHERE email = 'nan';
+2025-12-08 16:55:43 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:00:29 -05 LOG:  empezando checkpoint: time
+2025-12-08 17:00:31 -05 LOG:  checkpoint complete: wrote 16 buffers (0.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=1.772 s, sync=0.012 s, total=1.810 s; sync files=17, longest=0.002 s, average=0.001 s; distance=50 kB, estimate=2530 kB; lsn=0/1D7D168, redo lsn=0/1D7D110
+2025-12-08 17:05:45 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:06:18 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:06:51 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:11:12 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:11:45 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:12:17 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:16:14 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:18:21 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:18:51 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:19:25 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:20:21 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:20:54 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:21:15 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:21:48 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:28:42 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:31:06 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:34:30 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:40:35 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:40:50 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 17:45:33 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 18:01:24 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 18:04:02 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 18:06:26 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 18:06:56 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 18:07:26 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 18:07:59 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 18:08:29 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 18:11:27 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 18:12:00 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 18:15:20 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 18:15:29 -05 LOG:  empezando checkpoint: time
+2025-12-08 18:15:29 -05 LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.116 s, sync=0.002 s, total=0.149 s; sync files=1, longest=0.002 s, average=0.002 s; distance=6 kB, estimate=2278 kB; lsn=0/1D7ED70, redo lsn=0/1D7ECE0
+2025-12-08 18:35:29 -05 LOG:  empezando checkpoint: time
+2025-12-08 18:35:29 -05 LOG:  checkpoint complete: wrote 2 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.220 s, sync=0.002 s, total=0.252 s; sync files=2, longest=0.002 s, average=0.001 s; distance=10 kB, estimate=2051 kB; lsn=0/1D818D0, redo lsn=0/1D81878
+2025-12-08 18:46:38 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 18:50:04 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 19:06:13 -05 ERROR:  no existe la relación «usuario» en carácter 13
+2025-12-08 19:06:13 -05 SENTENCIA:  INSERT INTO usuario (email, hashed_password, nombre, created_at, updated_at)
+	VALUES (
+	    'test@ejemplo.com', 
+	    '6ca759d2df9856a829ea396dacb7f00b3d9c0d075ff6cd66b95927daaee37e98$5bc7f9f20fc6d55d64f07412f2826fc57ed15c5ca027862764d323c67963b6a7', 
+	    'Usuario de Prueba',
+	    NOW(),
+	    NOW()
+	)
+	-- Agrega ON CONFLICT si el usuario ya existe y quieres actualizarlo (ejemplo: ON CONFLICT (email) DO UPDATE SET hashed_password = EXCLUDED.hashed_password);
+	ON CONFLICT (email) DO UPDATE 
+	SET 
+	    hashed_password = EXCLUDED.hashed_password, 
+	    updated_at = NOW();
+2025-12-08 19:07:21 -05 ERROR:  error de sintaxis en o cerca de «/» en carácter 1
+2025-12-08 19:07:21 -05 SENTENCIA:  /q
+	INSERT INTO usuario (email, hashed_password, nombre, created_at, updated_at)
+	VALUES (
+	    'test@ejemplo.com', 
+	    '6ca759d2df9856a829ea396dacb7f00b3d9c0d075ff6cd66b95927daaee37e98$5bc7f9f20fc6d55d64f07412f2826fc57ed15c5ca027862764d323c67963b6a7', 
+	    'Usuario de Prueba',
+	    NOW(),
+	    NOW()
+	)
+	ON CONFLICT (email) DO UPDATE 
+	SET 
+	    hashed_password = EXCLUDED.hashed_password, 
+	    updated_at = NOW();
+2025-12-08 19:14:16 -05 ERROR:  no existe la relación «usuario» en carácter 13
+2025-12-08 19:14:16 -05 SENTENCIA:  INSERT INTO usuario (email, hashed_password, nombre, created_at, updated_at)
+	VALUES (
+	    'test@ejemplo.com', 
+	    'b7a4a0e5f328a033b99c1c4412d04245efa10bde0c8af5e62519d8b04b0eeaa9$aa96f070d31439b02e41c62224ba5e917fe38fe39bb584ccf9178c86a40a7add', 
+	    'Usuario de Prueba',
+	    NOW(),
+	    NOW()
+	)
+	ON CONFLICT (email) DO UPDATE 
+	SET 
+	    hashed_password = EXCLUDED.hashed_password, 
+	    updated_at = NOW();
+2025-12-08 19:29:51 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 19:46:30 -05 ERROR:  no existe la columna «updated_at» en la relación «usuarios» en carácter 67
+2025-12-08 19:46:30 -05 SENTENCIA:  INSERT INTO usuarios (email, hashed_password, nombre, created_at, updated_at)
+	VALUES (
+	    'test@ejemplo.com', 
+	    'b7a4a0e5f328a033b99c1c4412d04245efa10bde0c8af5e62519d8b04b0eeaa9$aa96f070d31439b02e41c62224ba5e917fe38fe39bb584ccf9178c86a40a7add', 
+	    'Usuario de Prueba',
+	    NOW(),
+	    NOW()
+	)
+	ON CONFLICT (email) DO UPDATE 
+	SET 
+	    hashed_password = EXCLUDED.hashed_password, 
+	    updated_at = NOW();
+2025-12-08 19:48:05 -05 ERROR:  no existe la columna «updated_at» en la relación «usuarios» en carácter 67
+2025-12-08 19:48:05 -05 SENTENCIA:  INSERT INTO usuarios (email, hashed_password, nombre, created_at, updated_at)
+	VALUES (
+	    'test@ejemplo.com', 
+	    'b7a4a0e5f328a033b99c1c4412d04245efa10bde0c8af5e62519d8b04b0eeaa9$aa96f070d31439b02e41c62224ba5e917fe38fe39bb584ccf9178c86a40a7add', 
+	    'Usuario de Prueba',
+	    NOW(),
+	    NOW()
+	)
+	ON CONFLICT (email) DO UPDATE 
+	SET 
+	    hashed_password = EXCLUDED.hashed_password, 
+	    updated_at = NOW();
+2025-12-08 19:50:15 -05 LOG:  empezando checkpoint: time
+2025-12-08 19:50:17 -05 LOG:  checkpoint complete: wrote 9 buffers (0.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=1.111 s, sync=0.310 s, total=2.243 s; sync files=7, longest=0.095 s, average=0.045 s; distance=2 kB, estimate=1846 kB; lsn=0/1D82158, redo lsn=0/1D82100
+2025-12-08 19:55:15 -05 LOG:  empezando checkpoint: time
+2025-12-08 19:55:16 -05 LOG:  checkpoint complete: wrote 7 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.788 s, sync=0.005 s, total=0.820 s; sync files=6, longest=0.002 s, average=0.001 s; distance=20 kB, estimate=1663 kB; lsn=0/1D872C8, redo lsn=0/1D87270
+2025-12-08 20:31:55 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 20:36:33 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 20:52:53 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 20:55:32 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 21:06:22 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 21:06:52 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 21:10:15 -05 LOG:  empezando checkpoint: time
+2025-12-08 21:10:15 -05 LOG:  checkpoint complete: wrote 2 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.324 s, sync=0.027 s, total=0.903 s; sync files=2, longest=0.016 s, average=0.014 s; distance=4 kB, estimate=1497 kB; lsn=0/1D884F0, redo lsn=0/1D88498
+2025-12-08 21:11:05 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 21:11:20 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 21:13:37 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 21:14:15 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 21:15:15 -05 LOG:  empezando checkpoint: time
+2025-12-08 21:15:16 -05 LOG:  checkpoint complete: wrote 14 buffers (0.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=1.569 s, sync=0.008 s, total=1.614 s; sync files=10, longest=0.002 s, average=0.001 s; distance=21 kB, estimate=1350 kB; lsn=0/1D8D9F0, redo lsn=0/1D8D998
+2025-12-08 21:25:14 -05 LOG:  el sistema de bases de datos fue interrumpido; �ltima vez en funcionamiento en 2025-12-08 21:15:16 -05
+2025-12-08 21:25:16 -05 LOG:  el sistema de bases de datos no fue apagado apropiadamente; se est� efectuando la recuperaci�n autom�tica
+2025-12-08 21:25:16 -05 LOG:  redo comienza en 0/1D8D998
+2025-12-08 21:25:16 -05 LOG:  largo de registro no v�lido en 0/1D8DAA0: se esperaba al menos 24, se obtuvo 0
+2025-12-08 21:25:16 -05 LOG:  redo listo en 0/1D8DA68 utilizaci�n del sistema: CPU: usuario: 0.00 s, sistema: 0.00 s, transcurrido: 0.00 s
+2025-12-08 21:25:16 -05 LOG:  empezando checkpoint: end-of-recovery immediate wait
+2025-12-08 21:25:16 -05 LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.004 s, total=0.029 s; sync files=2, longest=0.003 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/1D8DAA0, redo lsn=0/1D8DAA0
+2025-12-08 21:35:16 -05 LOG:  empezando checkpoint: time
+2025-12-08 21:35:17 -05 LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.132 s, sync=0.002 s, total=0.180 s; sync files=1, longest=0.002 s, average=0.002 s; distance=8 kB, estimate=8 kB; lsn=0/1D8FBF0, redo lsn=0/1D8FB98
+2025-12-08 22:02:29 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 22:32:45 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 22:32:52 -05 LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 22:32:52 -05 LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2025-12-08 22:33:06 -05 ERROR:  cancelando la sentencia debido a una petici�n del usuario
+2025-12-08 22:33:06 -05 LOG:  apagando
+2025-12-08 22:33:06 -05 LOG:  empezando checkpoint: shutdown immediate
+2025-12-08 22:33:06 -05 LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.001 s, total=0.037 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=7 kB; lsn=0/1D8FCA0, redo lsn=0/1D8FCA0

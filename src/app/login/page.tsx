@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Briefcase, Mail, Lock, LogIn } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
-import { useAuth } from '@/context/auth-context';
+import { useAuth } from '@/context/contexto-autenticacion';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,8 +24,7 @@ export default function LoginPage() {
     setError('');
     try {
       await login(email, password);
-      toast({ title: 'Bienvenido', description: 'Sesión iniciada correctamente' });
-      // La redirección se hace en auth-context después de fetchCurrentUser
+      toast({ title: 'Bienvenido', description: 'Sesión iniciada correctamente' });      
     } catch (err: any) {
       const msg = err?.message || 'No se pudo iniciar sesión';
       setError(msg);
@@ -41,7 +40,7 @@ export default function LoginPage() {
             <Briefcase className="h-10 w-10" />
           </div>
           <div>
-            <CardTitle className="text-2xl font-bold">NominaColombia</CardTitle>
+            <CardTitle className="text-2xl font-bold">Nomina</CardTitle>
             <CardDescription className="text-base mt-2">Inicia sesión en tu cuenta</CardDescription>
           </div>
         </CardHeader>
