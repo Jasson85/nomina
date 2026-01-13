@@ -1,9 +1,0 @@
-2025-12-10 17:22:03 -05 LOG:  el sistema de bases de datos fue apagado en 2025-12-09 16:05:59 -05
-2025-12-10 17:27:03 -05 LOG:  empezando checkpoint: time
-2025-12-10 17:27:03 -05 LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.019 s, sync=0.003 s, total=0.065 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/1D8FF60, redo lsn=0/1D8FF08
-2025-12-10 20:15:22 -05 LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
-	
-2025-12-10 21:23:09 -05 LOG:  apagando
-2025-12-10 21:23:09 -05 LOG:  empezando checkpoint: shutdown immediate
-2025-12-10 21:23:09 -05 ERROR:  cancelando la sentencia debido a una petición del usuario
-2025-12-10 21:23:09 -05 LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.018 s, sync=0.001 s, total=0.108 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/1D90028, redo lsn=0/1D90028
